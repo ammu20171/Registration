@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+hackathon.db
+test_hackathon.db
+.DS_Store
+uploads/
+.pytest_cache/
+*.xlsx

@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}Team Registration - DevSync 2026{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <!-- Progress Steps -->
+        <div class="progress-steps-wrapper px-md-5 mb-5 text-center">
+            <div class="progress-steps">
+                <div class="progress-bar-fill" style="width: 0%;"></div>
+                <div class="step-wrapper d-flex flex-column align-items-center">
+                    <div class="step-indicator active" id="step-ind-1">1</div>
+                    <span class="step-label">Project Details</span>
+                </div>
+                <div class="step-wrapper d-flex flex-column align-items-center">
+                    <div class="step-indicator" id="step-ind-2">2</div>
+                    <span class="step-label">Team Members</span>
+                </div>
+                <div class="step-wrapper d-flex flex-column align-items-center">
+                    <div class="step-indicator" id="step-ind-3">3</div>
+                    <span class="step-label">Mentor & PPT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration Card -->
+        <div class="card glass-panel border-0">
+            <div class="card-header card-header-accent bg-transparent text-center py-4">
+                <h2 class="font-outfit fw-bold tracking-wide mb-1 text-primary-gradient">HACKATHON REGISTRATION</h2>
+                <p class="text-secondary mb-0">Register your team for DevSync 2026</p>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                <!-- Registration Form -->
+                <form id="registrationForm" action="/" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    
+                    <!-- STEP 1: Team & Project Details -->
+                    <div class="step-container active" id="step-1">
+                        <h4 class="font-outfit fw-bold mb-4"><i class="bi bi-info-circle-fill text-primary me-2"></i>Team & Project Information</h4>
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="team_name" class="form-label">Team Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="team_name" name="team_name" required placeholder="Enter unique team name">
+                                <div class="invalid-feedback">Please enter a team name.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="department" name="department" required placeholder="e.g. CSE">
+                                <div class="invalid-feedback">Please enter department.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="year_of_study" class="form-label">Year of Study <span class="text-danger">*</span></label>
+                                <select class="form-select" id="year_of_study" name="year_of_study" required>
+                                    <option value="" selected disabled>Choose...</option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                    <option value="4">4th Year</option>
+                                </select>
+                                <div class="invalid-feedback">Please select year of study.</div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="domain" class="form-label">Domain <span class="text-danger">*</span></label>
+                                <select class="form-select" id="domain" name="domain" required>
+                                    <option value="" selected disabled>Select Domain...</option>
+                                    <option value="Software">Software</option>
+                                    <option value="Hardware">Hardware</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a domain.</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="problem_statement_id" class="form-label">Problem Statement ID <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="problem_statement_id" name="problem_statement_id" required placeholder="e.g. PS01-A">
+                                <div class="invalid-feedback">Please enter problem statement ID.</div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="project_title" class="form-label">Project Title <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="project_title" name="project_title" required placeholder="Brief title of your hackathon project">
+                                <div class="invalid-feedback">Please enter project title.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="project_description" class="form-label">Project Abstract / Description <span class="text-secondary">(Optional)</span></label>
+                                <textarea class="form-control" id="project_description" name="project_description" rows="4" placeholder="Briefly describe your solution..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-gradient px-4 py-2 rounded-pill next-step-btn">
+                                Next: Team Members <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Team Members -->
+                    <div class="step-container" id="step-2">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="font-outfit fw-bold mb-0"><i class="bi bi-people-fill text-primary me-2"></i>Team Members (Min 4, Max 6)</h4>
+                            <button type="button" class="btn btn-outline-info rounded-pill px-3 py-1 btn-sm" id="addMemberBtn">
+                                <i class="bi bi-plus-circle me-1"></i> Add Member
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Members Wrapper -->
+                        <div id="membersWrapper">
+                            <!-- Team members will be injected dynamically via JS -->
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-pill prev-step-btn">
+                                <i class="bi bi-arrow-left me-1"></i> Back
+                            </button>
+                            <button type="button" class="btn btn-gradient px-4 py-2 rounded-pill next-step-btn">
+                                Next: Mentor & File <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Mentor & Presentation Upload -->
+                    <div class="step-container" id="step-3">
+                        <h4 class="font-outfit fw-bold mb-4"><i class="bi bi-person-check-fill text-primary me-2"></i>Mentor Details</h4>
+                        
+                        <div class="row g-3 mb-5">
+                            <div class="col-md-4">
+                                <label for="mentor_name" class="form-label">Mentor Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="mentor_name" name="mentor_name" required placeholder="Professor or Guide Name">
+                                <div class="invalid-feedback">Please enter mentor's name.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="mentor_email" class="form-label">Mentor Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="mentor_email" name="mentor_email" required placeholder="mentor@college.edu">
+                                <div class="invalid-feedback">Please enter a valid email.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="mentor_mobile" class="form-label">Mentor Mobile <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="mentor_mobile" name="mentor_mobile" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+                                <div class="invalid-feedback">Please enter a valid 10-digit mobile number.</div>
+                            </div>
+                        </div>
+
+                        <h4 class="font-outfit fw-bold mb-3"><i class="bi bi-cloud-arrow-up-fill text-primary me-2"></i>Presentation Upload</h4>
+                        <p class="text-secondary mb-3">Upload your project presentation pitch deck. Supported file formats: <strong>.ppt, .pptx, .pdf</strong> (Strictly max <strong>20 MB</strong>).</p>
+                        
+                        <!-- File Upload Zone -->
+                        <div class="upload-zone text-center p-5 mb-4" id="dropzone">
+                            <i class="bi bi-file-earmark-zip-fill mb-3 d-block text-secondary"></i>
+                            <span class="d-block mb-2 text-white fw-semibold" id="uploadLabel">Drag & drop your presentation file here or click to browse</span>
+                            <span class="text-secondary fs-7">Maximum file size: 20MB</span>
+                            <input type="file" class="d-none" id="presentation" name="presentation" accept=".ppt,.pptx,.pdf" required>
+                            <div class="invalid-feedback mt-2" id="fileError">Please upload a valid project presentation file (.ppt, .pptx, .pdf under 20MB).</div>
+                        </div>
+                        
+                        <!-- File Info Bar (Hidden by default) -->
+                        <div class="p-3 bg-dark-card border border-secondary-subtle rounded-3 mb-4 d-none" id="fileInfoBar">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="bi bi-file-earmark-check-fill text-success fs-3"></i>
+                                    <div>
+                                        <span class="d-block fw-semibold text-white" id="selectedFileName">presentation.pdf</span>
+                                        <span class="text-secondary fs-7" id="selectedFileSize">12.4 MB</span>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-danger btn-sm rounded-circle px-2" id="removeFileBtn">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message Alert Container -->
+                        <div id="errorAlert" class="alert alert-danger d-none border-0 shadow" role="alert">
+                            <i class="bi bi-exclamation-circle-fill me-2"></i>
+                            <span id="errorMessageText">Validation Error Message</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-5">
+                            <button type="button" class="btn btn-outline-secondary px-4 py-2 rounded-pill prev-step-btn">
+                                <i class="bi bi-arrow-left me-1"></i> Back
+                            </button>
+                            <button type="submit" class="btn btn-gradient-secondary px-5 py-2 rounded-pill" id="submitBtn">
+                                Submit Registration <i class="bi bi-send ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+{% endblock %}
