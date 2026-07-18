@@ -559,7 +559,7 @@ def export_all_excel():
     return app.response_class(
         output.read(),
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        headers={"Content-Disposition": "attachment;filename=devsync_registrations_all.xlsx"}
+        headers={"Content-Disposition": "attachment;filename=hackathon_committee_registrations_all.xlsx"}
     )
 
 @app.route('/admin/api/export/filtered', methods=['GET'])
@@ -605,7 +605,7 @@ def export_filtered_excel():
     return app.response_class(
         output.read(),
         mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        headers={"Content-Disposition": "attachment;filename=devsync_registrations_filtered.xlsx"}
+        headers={"Content-Disposition": "attachment;filename=hackathon_committee_registrations_filtered.xlsx"}
     )
 
 def safe_int(val, default=None):
