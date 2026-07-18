@@ -368,14 +368,16 @@ input:checked + .toggle-slider:before {
 }
 
 .custom-table tbody tr {
-    background: rgba(18, 24, 38, 0.4);
     transition: all 0.25s ease;
     border-radius: 10px;
 }
 
 .custom-table tbody tr:hover {
-    background: rgba(30, 41, 59, 0.5);
     transform: scale(1.005);
+}
+
+.custom-table tbody tr:hover td {
+    background-color: rgba(30, 41, 59, 0.9) !important;
 }
 
 .custom-table tbody td {
@@ -383,6 +385,9 @@ input:checked + .toggle-slider:before {
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
     vertical-align: middle;
+    background-color: #121826 !important;
+    color: var(--text-primary);
+    transition: background-color 0.25s ease;
 }
 
 .custom-table tbody td:first-child {
