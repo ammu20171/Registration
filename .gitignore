@@ -7,3 +7,5 @@ test_hackathon.db
 uploads/
 .pytest_cache/
 *.xlsx
+*.pem
+

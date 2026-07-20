@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 # Basic configurations
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'devsync_secret_key_2026')
+app.config['PREFERRED_URL_SCHEME'] = os.environ.get('PREFERRED_URL_SCHEME', 'https')
 database_url = os.environ.get('DATABASE_URL')
 if not database_url:
     database_url = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'hackathon.db')
@@ -820,4 +821,20 @@ if __name__ == '__main__':
             db.session.add(default_admin)
             db.session.commit()
             print("Auto-seeded admin user: admin / admin123")
-    app.run(debug=True, port=5001)
+
+    # SSL configuration (uses SSL_CERT/SSL_KEY env vars if set, or cert.pem/key.pem in project root, else 'adhoc')
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    default_cert = os.path.join(base_dir, 'cert.pem')
+    default_key = os.path.join(base_dir, 'key.pem')
+
+    ssl_cert = os.environ.get('SSL_CERT', default_cert if os.path.exists(default_cert) else None)
+    ssl_key = os.environ.get('SSL_KEY', default_key if os.path.exists(default_key) else None)
+
+    if ssl_cert and ssl_key and os.path.exists(ssl_cert) and os.path.exists(ssl_key):
+        ssl_context = (ssl_cert, ssl_key)
+    else:
+        ssl_context = 'adhoc'
+
+
+    port = int(os.environ.get('PORT', 5001))
+    app.run(debug=True, use_reloader=False, port=port, ssl_context=ssl_context)
